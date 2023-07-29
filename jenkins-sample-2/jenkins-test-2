@@ -1,0 +1,25 @@
+pipeline {
+  agent none
+  stages {
+    // Stage for the Back-end build using Maven and Python
+    stage('Back-end') {
+      agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11-openj9' }
+      }
+      steps {
+        sh 'mvn --version'
+        sh 'python --version' // Checking Python version
+      }
+    }
+    // Stage for the Front-end build using Node.js
+    stage('Front-end') {
+      agent {
+        docker { image 'node:16-alpine' }
+      }
+      steps {
+        sh 'node --version'
+      }
+    }
+  }
+}
+
